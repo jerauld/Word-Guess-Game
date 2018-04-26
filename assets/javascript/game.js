@@ -1,8 +1,8 @@
 /* INITAL SETUP
  ----------------------------------------------------------------------------------------------------------------*/
 
-//Create an array of words
-var dwarfArray = [
+//Array of pokemon objects each with words (name), image1 (Pokemon Silhouettes), image2 (Pokemon Reveal)
+var pokemonArray = [
     {
         word: "greninja",
         image1: "assets/images/658greninja-b.png",
@@ -129,37 +129,42 @@ var dwarfArray = [
         image2: "assets/images/492shaymin.png"
     }]
 
-//Pick random
-var randomNumber = Math.floor(Math.random() * dwarfArray.length);
+//gameStatus is my start/stop controller between questions    
 var gameStatus = false;
-var dwarf = dwarfArray[randomNumber].word;
-var dwarfImage1 = dwarfArray[randomNumber].image1
-var dwarfImage2 = dwarfArray[randomNumber].image2
 
-var lettersRemaining = dwarf.length;
+//Generate randomNumber
+var randomNumber = Math.floor(Math.random() * pokemonArray.length);
 
-//Set up the answer array
+//Apply randomNumber to obtain random word (answer), and related images.
+var pokemon = pokemonArray[randomNumber].word;
+var pokemonImage1 = pokemonArray[randomNumber].image1
+var pokemonImage2 = pokemonArray[randomNumber].image2
+
+//Establish lettersRemaining (for win);
+var lettersRemaining = pokemon.length;
+
+//Set up the answer array to store word (answer) as an array for indexing.
 var answerArray = []; 
-
-// init();
 
 /* LISTENERS
  ----------------------------------------------------------------------------------------------------------------*/
 
 //Use key events to listen for the letters that your players will type.
 document.addEventListener("keyup", function(event){
+    //If gameStatus (or game round) has been initialized, then proceed to playing.
     if(gameStatus) {
         letterCheck(event);
     } else {
+        //If gameStatus (or game round) has completed, re-initialize (or reset) the game.
         init();
     }
 });
 
-//Check if the key pressed is a letter
-
+//Setup alphabet array for letter checking
 var alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
 function letterCheck(guess) {
+    //If letter key is press, check if the letter pressed is in the answer.
     if (alphabetArray.indexOf(guess.key) > -1) {
         correctGuessCheck(guess);
     }
@@ -168,7 +173,7 @@ function letterCheck(guess) {
 //Check whether the guess is correct
 var winScore = 0;
 function correctGuessCheck(guess) {
-    if (dwarf.indexOf(guess.key) > -1) {
+    if (pokemon.indexOf(guess.key) > -1) {
         //if guess is correct, run correctGuess function.
         correctGuess(guess);
     } else {
@@ -185,17 +190,25 @@ function correctGuess(guess) {
 }
 
 function addCorrectLetter(guess) {
-    for (var j = 0; j < dwarf.length; j++) {
-        if (guess.key === dwarf[j]) {
+    for (var j = 0; j < pokemon.length; j++) {
+        //If guess matches an existing letter in the answer.
+        if (guess.key === pokemon[j]) {
+            //Push correct letter to answerArray as upperCase.
             answerArray[j] = guess.key.toUpperCase();
             displayCurrentWord();
+            //Reduce letters remaining for win by one.
             lettersRemaining--;
-            console.log(lettersRemaining);
+            //If letters left has reached 0, user wins. 
             if (lettersRemaining === 0) {
+                //Add 1 to win score.
                 winScore++;
+                //Display new win score.
                 displayWins();
+                //Reveal the Pokemon's identiy.
                 changeImage();
+                //Turn correct answer green.
                 addCorrect();
+                //display currentWord with new green font.
                 displayCurrentWord();
             }
         }
@@ -203,8 +216,8 @@ function addCorrectLetter(guess) {
 }
 
 //Set up an incorrect answer array
-
 var incorrectGuessesMade = [];
+//Establish the number of guesses.
 var guessesLeft = 9;
 
 function incorrectGuess(guess) {
@@ -226,6 +239,7 @@ function addIncorrectLetter(guess) {
     if (guessesLeft === 0) {
         //If guesses left reaches equals 0, then Game Over.
         changeImage();
+        //Display corrent answer.
         displayAnswer();
     }
 }
@@ -233,90 +247,117 @@ function addIncorrectLetter(guess) {
 /* HANDLERS
 ----------------------------------------------------------------------------------------------------------------*/
 
+//Displays the number of wins user has obtains.
 function displayWins() {
     var winsDisplay = document.querySelector("#winsDisplay");
     winsDisplay.textContent = winScore;
 }
 
+//Displays the letters the user has guessed.
 function displayGuessesMade() {
     var guessesMadeDisplay = document.querySelector("#guessesMadeDisplay");
     guessesMadeDisplay.textContent = incorrectGuessesMade.join(", ");
 }
 
+//Displays how many user guesses are left.
 function displayGuessesLeft() {
     var guessesLeftDisplay = document.querySelector("#guessesLeftDisplay");
     guessesLeftDisplay.textContent = guessesLeft;
 }
 
+//Displays current solve status of answerArray.
 function displayCurrentWord() {
     var currentWordDisplay = document.querySelector("#currentWordDisplay");
     currentWordDisplay.innerHTML = answerArray.join(" ");
 }
 
+//Displays silhouette of Pokemon when game initalizes.
 function displayImage() {
     var pictureDisplay = document.querySelector("#pictureDisplay");
-    pictureDisplay.src = dwarfImage1;
+    pictureDisplay.src = pokemonImage1;
 }
 
+//Reveals Pokemon identiy regardless of whether user was able to solve. 
 function changeImage() {
     var pictureDisplay = document.querySelector("#pictureDisplay");
-    pictureDisplay.src = dwarfImage2;
+    pictureDisplay.src = pokemonImage2;
     gameStatus = false;
 }
 
+//Reveals answer if user is unable to solve.
 function displayAnswer() {
     var revealedAnswerDisplay = document.querySelector("#revealedAnswerDisplay");
-    revealedAnswerDisplay.textContent = dwarf.toUpperCase();
+    revealedAnswerDisplay.textContent = pokemon.toUpperCase();
 }
 
+//Turns current word green (to indicate correctness)
 function addCorrect() {
     var currentWordDisplay = document.querySelector("#currentWordDisplay");
     currentWordDisplay.classList.add('correct');
 }
 
+//Removes green color of current word (for re-initalizing purposes)
 function removeCorrect() {
     var currentWordDisplay = document.querySelector("#currentWordDisplay");
     currentWordDisplay.classList.remove('correct');
 }
 
 
-// Re-initalize the game.
+/* Initalize (or re-initialize) the game.
+----------------------------------------------------------------------------------------------------------------*/
 
 function init() {
-    //Pick random
-    randomNumber = Math.floor(Math.random() * dwarfArray.length);
+    //Changes gameStatus to ready.
     gameStatus = true;
-    dwarf = dwarfArray[randomNumber].word;
-    dwarfImage1 = dwarfArray[randomNumber].image1
-    dwarfImage2 = dwarfArray[randomNumber].image2
+    
+    //Generate a new random number
+    randomNumber = Math.floor(Math.random() * pokemonArray.length);
+    
+    //Apply new randomNumber to obtain random word (answer), and related images.
+    pokemon = pokemonArray[randomNumber].word;
+    pokemonImage1 = pokemonArray[randomNumber].image1
+    pokemonImage2 = pokemonArray[randomNumber].image2
 
-    lettersRemaining = dwarf.length;
+    //Re-establish lettersRemaining (for win);
+    lettersRemaining = pokemon.length;
 
-    //Set up the answer array
+    //Re-establish answer array.
      answerArray = []; 
 
-    for (var i = 0; i < dwarf.length; i++) {
-        //If the word is 'madonna', display it like this when the game starts. '_ _ _ _ _ _ _'
-        if (dwarf[i] === "+") {
+    //Convert word answer into an array.
+    for (var i = 0; i < pokemon.length; i++) {
+        //If an answer has more than one word, use + as a separator. A space will be displayed when currentWord is displayed. Not applicable for this particlar Pokemon game, but here for flexibility.
+        if (pokemon[i] === "+") {
             answerArray[i] = "&nbsp;";
         } else {
+            //Replace word answer with "_"s
             answerArray[i] = "_";
         }
     }
 
-    lettersRemaining = dwarf.length;
+    //Re-establish lettersRemaining (for win)
+    lettersRemaining = pokemon.length;
 
+    //Re-establish guessesLeft for user.
     guessesLeft = 9;
     displayGuessesLeft()
 
+    //Re-establish guessesMade array.
     incorrectGuessesMade = [];
     displayGuessesMade()
-
+    
+    //Display current word.
     displayCurrentWord();
+
+    //Display Pokemon silhouette.
     displayImage();
 
+    //Empty revealedAnswer display if user was unsuccessful previously.
     revealedAnswerDisplay.textContent = "";
+
+    //Play "Who's that pokemon?" audio.
     document.getElementById('whosThat').play();
 
+    //Remove greenColor from currentWord if user was successful previously.
     removeCorrect();
 }
