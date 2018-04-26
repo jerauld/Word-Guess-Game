@@ -13,7 +13,7 @@
 
 <body class="text-center">
   <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-
+  
     <div class="container">
       <div class="jumbotron">
         <div class="row">
@@ -22,41 +22,49 @@
           </div>
         </div>
         <div class="mx-auto jumbotron mainDisplay">
-        <div class="row">
-          <div class="col-md-6 mr-auto mobileBoard">
-              <p class="ml-2 text-left mobileBoard">Guesses Remaining: <span id="guessesLeftDisplay">9</span></p>
+          <div class="row">
+            <div class="col-md-6 mr-auto mobileBoard">
+              <p class="ml-2 text-left mobileBoard">Guesses Remaining:
+                <span id="guessesLeftDisplay">9</span>
+              </p>
+            </div>
+            <div class="col-md-6 ml-auto mobileBoard">
+              <p class="mr-2 text-right mobileBoard">Wins:
+                <span id="winsDisplay">0</span>
+              </p>
+            </div>
           </div>
-          <div class="col-md-6 ml-auto mobileBoard">
-              <p class="mr-2 text-right mobileBoard">Wins: <span id="winsDisplay">0</span></p>
-          </div>
-        </div>
-        <div class="row">
+          <div class="row">
             <div class="col-md-12 parent">
-            <img class="img-fluid rounded" src="assets/images/grass.png" />
-            <img class="innerOverlay" src="" id="pictureDisplay" />
+              <img class="img-fluid rounded" src="assets/images/grass.png" alt="Grass Background" />
+              <img class="innerOverlay" src="" id="pictureDisplay" alt="Pokemon Overlay" />
+            </div>
           </div>
-        </div>
-        <div class="row">
+          <div class="row">
             <div class="col-md-12 parent">
-                <h6>Please any key to get started!</h6>
+              <h6>Please any key to get started!</h6>
+            </div>
           </div>
         </div>
-      </div>
-
-        
-        
+  
+  
+  
         <h5>Current Word</h5>
-        <p class="activeWords"><span id="currentWordDisplay"></span></p>
+        <p class="activeWords">
+          <span id="currentWordDisplay"></span>
+        </p>
         <p class="activeWords" id="revealedAnswerDisplay"></p>
         <p class="activeWords" id="correctDisplay"></p>
-        
+  
   
         <h6>Letters Already Guessed</h6>
-        <p class="activeWords"><span id="guessesMadeDisplay"></span></p>
-        
-
+        <p class="activeWords">
+          <span id="guessesMadeDisplay"></span>
+        </p>
+  
       </div>
     </div>
+  </div>
 
     <footer class="mastfoot mt-auto">
       <div class="inner">
