@@ -26,6 +26,6 @@ Number of Guesses Remaining: (# of guess remaining for the user).
 
 ## Screenshots
 
-<img src="https://raw.githubusercontent.com/julienshim/Word-Guess-Game/master/assets/images/screenshot-guess.png" width="500 />
+<img src="https://raw.githubusercontent.com/julienshim/Word-Guess-Game/master/assets/images/screenshot-guess.png" width="500" />
 
 <img src="https://raw.githubusercontent.com/julienshim/Word-Guess-Game/master/assets/images/screenshot-reveal.png" width="500" />
