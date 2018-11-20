@@ -4,6 +4,10 @@
 
 Pokemon Hangman was created for the Word Guess Game homework assignment for Berkeley Coding Bootcamp and features dynamically updated HTML and CSS powered by Javascript running in a browser.
 
+## Demo (via GitHub Pages)
+
+https://julienshim.github.io/Word-Guess-Game/
+
 ## Requirements
 
 - Choose a theme for your game.
