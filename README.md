@@ -1,4 +1,4 @@
-# Word-Guess-Game
+# Pokemon Hangman
 
 ## Overview
 
