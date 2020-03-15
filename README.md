@@ -6,7 +6,7 @@ Pokemon Hangman was created for the Word Guess Game homework assignment for Berk
 
 ## Demo (via GitHub Pages)
 
-https://julienshim.github.io/Word-Guess-Game/
+https://julienshim.github.io/word-guess-game/
 
 ## Requirements
 
